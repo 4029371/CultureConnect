@@ -74,9 +74,8 @@ struct LandingView: View {
                     .accessibilityIdentifier("signupButton")
                     
                     // Log in button
-                    Button {
-                        // TODO: navigate to login flow
-                        print("Log in tapped")
+                    NavigationLink {
+                        LoginView()
                     } label: {
                         Text("I already have an account")
                             .font(.system(.headline, design: .rounded, weight: .semibold))
