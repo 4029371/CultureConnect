@@ -2,28 +2,43 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var postStore: PostStore
-    @State private var showComposer = false
+    @EnvironmentObject var questionStore: QuestionStore
     
     var body: some View {
         TabView {
-            // Tab 1: Explore / For You
+            // 1. Explore feed (answers)
             ExploreTabView()
                 .tabItem {
                     Label("Explore", systemImage: "house.fill")
                 }
-
-            // Tab 2: Categories
+            
+            // 2. Categories
             CategoriesTabView()
                 .tabItem {
                     Label("Categories", systemImage: "square.grid.2x2.fill")
                 }
-
-            // Tab 4: Account / Logout
+            
+            // 3. Ask a question
+            AskQuestionView()
+                .tabItem {
+                    Label("Ask", systemImage: "questionmark.bubble.fill")
+                }
+            
+            // 4. Answer a question
+            AnswerFlowRootView()
+                .tabItem {
+                    Label("Answer", systemImage: "pencil.and.outline")
+                }
+            
+            // 5. Account / Logout
             AccountTabView()
                 .tabItem {
                     Label("Account", systemImage: "person.crop.circle")
                 }
         }
+        .navigationBarBackButtonHidden(true)
+        .navigationTitle("CultureConnect")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -32,4 +47,5 @@ struct HomeView: View {
         HomeView()
     }
     .environmentObject(PostStore())
+    .environmentObject(QuestionStore())
 }
