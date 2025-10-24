@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct Post: Identifiable, Hashable {
     let id: UUID
@@ -102,4 +103,17 @@ extension Post {
             isReported: false
         )
     ]
+}
+
+extension PostCategory {
+    var color: Color {
+        switch self {
+        case .language:   return .teal
+        case .food:       return .orange
+        case .events:     return .pink
+        case .music:      return .purple
+        case .general:    return .gray
+        case .uniLife:    return .blue
+        }
+    }
 }

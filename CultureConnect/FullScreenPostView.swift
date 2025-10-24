@@ -19,9 +19,9 @@ struct FullScreenPostView: View {
                         .padding(.vertical, 6)
                         .background(
                             Capsule()
-                                .fill(Color.blue.opacity(0.1))
+                                .fill(post.category.color.opacity(0.15))
                         )
-                        .foregroundColor(.blue)
+                        .foregroundColor(post.category.color)
                     
                     Spacer()
                     
@@ -36,20 +36,18 @@ struct FullScreenPostView: View {
                     .foregroundStyle(.primary)
                     .fixedSize(horizontal: false, vertical: true)
                 
-                // Gradient bordered answer box
+                // Colored bordered answer box
                 ZStack {
+                    // Border
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                         .stroke(
-                            LinearGradient(
-                                colors: [Color.blue, Color.purple],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
+                            post.category.color,
                             lineWidth: 2
                         )
                         .background(
+                            // Inner fill
                             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .fill(Color(.secondarySystemBackground))
+                                .fill(post.category.color.opacity(0.12))
                         )
                     
                     // Scrollable body text
@@ -63,7 +61,6 @@ struct FullScreenPostView: View {
                     }
                     .scrollIndicators(.never)
                 }
-                // Let this box take remaining vertical space without exploding behind tab bar
                 .frame(maxHeight: .infinity)
                 
                 // Author / trust block
@@ -142,10 +139,10 @@ struct FullScreenPostView: View {
                 }
                 .padding(.top, 4)
             }
-            // These paddings create breathing room under the navbar and above the tab bar
+            // Padding for navbar and title
             .padding(.horizontal, 20)
-            .padding(.top, 16)    // space under "CultureConnect" nav title
-            .padding(.bottom, 32) // space above bottom tab bar
+            .padding(.top, 16)
+            .padding(.bottom, 32)
         }
     }
 }
