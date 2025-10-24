@@ -53,9 +53,8 @@ struct LandingView: View {
                 // Card with buttons
                 VStack(spacing: 20) {
                     // Sign up button
-                    Button {
-                        // TODO: navigate to sign up flow
-                        print("Sign up tapped")
+                    NavigationLink {
+                        SignupView()
                     } label: {
                         Text("Get Started")
                             .font(.system(.headline, design: .rounded, weight: .semibold))
