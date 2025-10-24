@@ -13,7 +13,6 @@ struct SignupView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
-                
                 // Hidden nav link that activates programmatically
                 NavigationLink(
                     destination: HomeView()

@@ -25,10 +25,6 @@ struct LoginView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Welcome back")
                         .font(.system(.title, design: .rounded, weight: .bold))
-
-                    Text("Good to see you again 👋")
-                        .font(.system(.callout, design: .rounded))
-                        .foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 8)
@@ -71,7 +67,7 @@ struct LoginView: View {
                     }
                 }
                 
-                // Log in button -> sets goHome = true
+                // Log in button goes to home
                 Button {
                     goHome = true
                 } label: {
