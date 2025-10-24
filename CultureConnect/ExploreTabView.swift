@@ -1,18 +1,18 @@
 import SwiftUI
 
 struct ExploreTabView: View {
+    let posts: [Post] = Post.samplePosts
+    
     var body: some View {
-        VStack(spacing: 16) {
-            Text("Explore")
-                .font(.system(.largeTitle, design: .rounded, weight: .bold))
-
-            Text("This will be your For You / swipe feed.")
-                .font(.body)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 24)
+        ScrollView {
+            LazyVStack(spacing: 0) {
+                ForEach(posts) { post in
+                    PostCardView(post: post)
+                }
+            }
+            .padding(.top, 16)
+            .padding(.bottom, 80) // keep clear of tab bar bounce
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
     }
 }
