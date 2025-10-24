@@ -99,13 +99,55 @@ struct SignupView: View {
                                 RoundedRectangle(cornerRadius: 14, style: .continuous)
                                     .stroke(Color.primary.opacity(0.1), lineWidth: 1)
                             )
-                        
-                        Text("This helps us verify you're sharing from lived experience. You can edit this later.")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
                     }
                 }
+                
+                // Guidelines agreement
+                Toggle(isOn: $agreeToGuidelines) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("I agree to follow CultureConnect's respect guidelines.")
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                    }
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .blue))
+                
+                // Continue button
+                Button {
+                    // naive validation for now
+                    print("Sign up tapped with:",
+                          displayName,
+                          email,
+                          password,
+                          backgroundInfo,
+                          agreeToGuidelines.description)
+                } label: {
+                    Text("Continue")
+                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                                .fill(agreeToGuidelines ? LinearGradient(
+                                        colors: [Color.blue, Color.purple],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                    : LinearGradient(
+                                        colors: [Color.gray.opacity(0.4), Color.gray.opacity(0.2)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                )
+                        )
+                        .foregroundColor(.white)
+                        .shadow(color: Color.black.opacity(agreeToGuidelines ? 0.15 : 0), radius: 10, y: 6)
+                }
+                .disabled(!agreeToGuidelines || displayName.isEmpty || email.isEmpty || password.isEmpty)
+                .accessibilityIdentifier("confirmSignupButton")
             }
+            .padding(.horizontal, 20)
+            .padding(.top, 24)
         }
         .scrollBounceBehavior(.basedOnSize)
         .navigationTitle("Sign up")
