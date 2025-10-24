@@ -21,7 +21,6 @@ struct HomeView: View {
                     Label("Account", systemImage: "person.crop.circle")
                 }
         }
-        // No nav bar back button on the whole tab experience
         .navigationBarBackButtonHidden(true)
         .navigationTitle("CultureConnect")
         .navigationBarTitleDisplayMode(.inline)
