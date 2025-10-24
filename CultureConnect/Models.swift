@@ -4,16 +4,20 @@ import SwiftUI
 struct Post: Identifiable, Hashable {
     let id: UUID
     
-    // Content
-    var title: String
-    var body: String
+    // Link back to the question
+    var questionID: UUID
+    var questionText: String      // copy of the question at time of answer
     
-    // Author
+    // Core content
+    var title: String             // short hook/headline for the answer
+    var body: String              // the answer content
+    
+    // Author info
     var authorDisplayName: String
     var authorCulturalTag: String
     var authorUniversity: String?
     
-    // Meta
+    // Meta / trust
     var category: PostCategory
     var timestamp: Date
     var isVerified: Bool
@@ -47,8 +51,11 @@ enum PostCategory: String, CaseIterable, Codable, Hashable {
 // Seed data
 extension Post {
     static let samplePosts: [Post] = [
+        // FOOD
         Post(
             id: UUID(),
+            questionID: UUID(),
+            questionText: "What do people usually eat for breakfast in Malaysia?",
             title: "Do Malaysians actually eat spicy food for breakfast??",
             body: """
                 Yes. Nasi lemak is literally coconut rice + sambal (chili paste) and we eat it at 8am before class.
@@ -69,7 +76,7 @@ extension Post {
                 Comment(
                     id: UUID(),
                     authorDisplayName: "Tom (Local)",
-                    body: "Wait is nasi lemak the thing wrapped in banana leaf?? I had that once at Queen Vic Market it slapped",
+                    body: "Wait is nasi lemak the thing wrapped in banana leaf?? I had that once at Queen Vic Market—it slapped!",
                     timestamp: Date(timeIntervalSinceNow: -1800)
                 ),
                 Comment(
@@ -81,8 +88,12 @@ extension Post {
             ],
             isReported: false
         ),
+        
+        // LANGUAGE
         Post(
             id: UUID(),
+            questionID: UUID(),
+            questionText: "Is it rude to try to speak another language if you're not fluent?",
             title: "Is it rude to try to speak Japanese if you're not good at it?",
             body: """
                 Short answer: No. We think it's cute and respectful 90% of the time.
@@ -101,9 +112,104 @@ extension Post {
             commentCount: 12,
             comments: [],
             isReported: false
+        ),
+        
+        // EVENTS
+        Post(
+            id: UUID(),
+            questionID: UUID(),
+            questionText: "What’s a big cultural festival you celebrate back home?",
+            title: "How we celebrate Diwali in India 🇮🇳",
+            body: """
+                It’s more than lights - it’s about cleaning the home, decorating with rangoli, visiting relatives, and eating *a lot* of sweets.
+
+                Here in Melbourne, we try to recreate it by cooking together in our sharehouse and video calling our families.
+
+                The feeling of home comes back for a bit, even with cheap fairy lights from Kmart 😅.
+                """,
+            authorDisplayName: "Ananya 🇮🇳",
+            authorCulturalTag: "Indian • International student",
+            authorUniversity: "Monash University",
+            category: .events,
+            timestamp: Date(timeIntervalSinceNow: -10800),
+            isVerified: true,
+            likeCount: 214,
+            commentCount: 9,
+            comments: [],
+            isReported: false
+        ),
+        
+        // MUSIC
+        Post(
+            id: UUID(),
+            questionID: UUID(),
+            questionText: "What kind of music reminds you of home?",
+            title: "K-Pop isn’t just pop — it’s a comfort blanket 🎵",
+            body: """
+                When I first came to Australia, I played old IU and Epik High songs to fall asleep. It’s not about lyrics, it’s about familiarity.
+
+                Music in your own language feels like being hugged by home after a long day.
+                """,
+            authorDisplayName: "Jin 🇰🇷",
+            authorCulturalTag: "Korean • Exchange student",
+            authorUniversity: "RMIT University",
+            category: .music,
+            timestamp: Date(timeIntervalSinceNow: -14400),
+            isVerified: true,
+            likeCount: 187,
+            commentCount: 4,
+            comments: [],
+            isReported: false
+        ),
+        
+        // UNI LIFE
+        Post(
+            id: UUID(),
+            questionID: UUID(),
+            questionText: "What’s the hardest part about studying abroad?",
+            title: "Adjusting to how casual professors are here 😅",
+            body: """
+                Back home, we’d never call a lecturer by their first name - here, everyone’s like “Hey Dave!”
+
+                It took me weeks to stop bowing slightly when leaving tutorials 😭. Now I love the chill vibe though.
+                """,
+            authorDisplayName: "Yuki 🇯🇵",
+            authorCulturalTag: "Japanese • Engineering student",
+            authorUniversity: "RMIT University",
+            category: .uniLife,
+            timestamp: Date(timeIntervalSinceNow: -18000),
+            isVerified: true,
+            likeCount: 256,
+            commentCount: 3,
+            comments: [],
+            isReported: false
+        ),
+        
+        // GENERAL
+        Post(
+            id: UUID(),
+            questionID: UUID(),
+            questionText: "What’s something people often misunderstand about your culture?",
+            title: "Being quiet doesn’t mean being shy",
+            body: """
+                In my culture, listening is a sign of respect — we wait before jumping into conversation. 
+
+                Some locals thought I was shy or uninterested, but I just didn’t want to interrupt. I’ve learned to balance both styles now.
+                """,
+            authorDisplayName: "Farah 🇮🇩",
+            authorCulturalTag: "Indonesian • Master’s student",
+            authorUniversity: "University of Melbourne",
+            category: .general,
+            timestamp: Date(timeIntervalSinceNow: -21600),
+            isVerified: true,
+            likeCount: 341,
+            commentCount: 14,
+            comments: [],
+            isReported: false
         )
     ]
 }
+
 
 extension PostCategory {
     var color: Color {
