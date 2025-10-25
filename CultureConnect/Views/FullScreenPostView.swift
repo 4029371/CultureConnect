@@ -5,6 +5,7 @@ struct FullScreenPostView: View {
     let post: Post
     @EnvironmentObject var postStore: PostStore
     @State private var showingComments = false
+    @State private var showingShare = false
     
     // MARK: - Body
     var body: some View {
@@ -66,7 +67,7 @@ struct FullScreenPostView: View {
                     VStack {
                         Spacer()
                         HStack(spacing: 10) {
-                            // likes
+                            // likes (tap to increment)
                             Button {
                                 postStore.incrementLikes(for: post.id)
                             } label: {
@@ -82,7 +83,7 @@ struct FullScreenPostView: View {
                             }
                             .buttonStyle(.plain)
                             
-                            // comments (tappable)
+                            // comments (tappable to open sheet)
                             Button {
                                 showingComments = true
                             } label: {
@@ -99,14 +100,15 @@ struct FullScreenPostView: View {
                             }
                             .buttonStyle(.plain)
                             
-                            // share
+                            // share (native share sheet)
                             Button {
-                                print("share tapped")
+                                showingShare = true
                             } label: {
                                 Image(systemName: "arrow.up.square.fill")
                                     .font(.system(size: 18, weight: .semibold))
                                     .foregroundColor(.green)
                             }
+                            .buttonStyle(.plain)
                             
                             Spacer(minLength: 0)
                         }
@@ -195,12 +197,24 @@ struct FullScreenPostView: View {
             .padding(.top, 16)
             .padding(.bottom, 32)
         }
-        // Comments sheet
+        // Sheet for comments
         .sheet(isPresented: $showingComments) {
             CommentsSheetView(
                 post: post,
                 postStore: postStore
             )
+        }
+        // Sheet for share
+        .sheet(isPresented: $showingShare) {
+            // You decide what we share.
+            // For now: question (title) + answer body snippet.
+            let shareText = """
+            \(post.title)
+
+            \(post.body.prefix(200))…
+            — via CultureConnect
+            """
+            ShareSheet(activityItems: [shareText])
         }
     }
 }
