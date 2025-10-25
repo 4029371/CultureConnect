@@ -19,5 +19,11 @@ class PostStore: ObservableObject {
             posts[index].commentCount += 1
         }
     }
+    
+    func incrementLikes(for postID: UUID) {
+        if let index = posts.firstIndex(where: { $0.id == postID }) {
+            posts[index].likeCount += 1
+        }
+    }
 }
 

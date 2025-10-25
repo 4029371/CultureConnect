@@ -67,15 +67,20 @@ struct FullScreenPostView: View {
                         Spacer()
                         HStack(spacing: 10) {
                             // likes
-                            HStack(spacing: 4) {
-                                Image(systemName: "heart.fill")
-                                    .foregroundColor(.pink)
-                                    .font(.system(size: 18, weight: .semibold))
-                                Text("\(post.likeCount)")
-                                    .foregroundColor(.pink)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                            Button {
+                                postStore.incrementLikes(for: post.id)
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundColor(.pink)
+                                        .font(.system(size: 18, weight: .semibold))
+                                    Text("\(post.likeCount)")
+                                        .foregroundColor(.pink)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
                             }
+                            .buttonStyle(.plain)
                             
                             // comments (tappable)
                             Button {
