@@ -31,7 +31,7 @@
 		5E2A9CB32EAB8F5E001CCC7D /* CultureConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CultureConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2A9CC32EAB8F5E001CCC7D /* CultureConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CultureConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E2A9CCD2EAB8F5E001CCC7D /* CultureConnectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CultureConnectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5E2A9D582EAC9A06001CCC7D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		5E2A9D582EAC9A06001CCC7D /* README.md */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 1; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
