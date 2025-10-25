@@ -6,23 +6,29 @@ Team CultureConnect
 - Donovan Ong (4029371)
 
 ## Project Scope (A1, A2, A3)
-In response to the prompt "University Problems", CultureConnect took a deeper look at the issue of Racism and Discrimination within universisties. While racism and discrimination are far from restricted to university settings, it is without a doubt a growing concern, evidenced by efforts such as the first "Racism@Uni" national survey on racism in universities run by the Australian Human Rights Commission and the commencement of RMIT's Anti-racism Commitment Statement and Action Plan occuring earlier this year.
+In response to the prompt "University Problems", CultureConnect explored the issue of racism and discrimination within universities. While racism and discrimination are far from limited to university settings, they remain a growing concern - evidenced by efforts such as the first Racism@Uni national survey run by the Australian Human Rights Commission and the recent launch of RMIT's Anti-Racism Commitment Statement and Action Plan earlier this year.
 
-To completely resolve this highly systemic and pervasive issue is simply out of scope for the project at this stage. However, by honing in on some of the root causes of racism and discrimination in univerisities, I hoped to move the needle in the right direction. Specfically, I saw the lack of understanding between students of different backgrounds to be a key factor for misunderstanding and miscommunication. This was the gap that CultureConnect aimed to bridge. Through creating a platform where verified students could ask, answer and share questions in small bite-sized chunks, the app could gradually build mutual understanding between students.
+Completely resolving such a systemic and deeply rooted issue is, of course, beyond the scope of this project. However, by honing in on some of the underlying causes of racism and discrimination within universities, CultureConnect aims to move the needle in the right direction. In particular, the lack of understanding and communication between students from different backgrounds was identified as a key factor. This is the gap CultureConnect seeks to bridge - by creating a platform where verified students can ask, answer, and share bite-sized questions and experiences to gradually foster mutual understanding.
 
-Take for instance the persona of Brody - He is a student coming from rural Victoria, having lived his entire life in a single town close to the border of NSW. Now attending RMIT in Melbourne's CBD, he is surrounded by cultures, foods, events and beliefs he has never had the opportunity to learn of or experience before. For a student such as Brody, CultureConnect represents an opportunity to ask questions about these new cultures, while providing his own perspective on what a rural Australian might think of some issue or celebrate some event. In doing so, cultural exchange between students is achieved, alleviated misunderstandings and miscommunications that often lead to avoidance, discrimination, or worse.
+For example, consider the persona of Brody - a student from rural Victoria who has lived his entire life in a small town near the NSW border. Now attending RMIT in Melbourne's CBD, he finds himself surrounded by new cultures, foods, and perspectives he has never encountered before. For a student like Brody, CultureConnect provides a safe space to ask questions about unfamiliar cultures and share his own perspective on rural life. In doing so, cultural exchange occurs naturally - reducing misunderstanding, miscommunication, and the resulting avoidance or discrimination that too often follow.
 
-The most significant risk to the idea are the aspects borrowed from social media - the idea of asking, answering and sharing posts itself is not new, and where users can freely post opinions, there is always a risk for hate speech, trolling, harrassment, misleading answers and so on. To mitigate this, any real implementation would require more consideration in moderation, both in tools (AI) and human-in-the-loop processes.
+That said, the idea of asking, answering, and sharing posts draws inspiration from social media, and with that comes risk - including potential hate speech, trolling, harassment, or misinformation. To mitigate this, any real-world implementation would require robust moderation systems, combining AI tools with human oversight.
 
-Additionally, pertinent to Australia is the recent social media ban for under 16s. While the audience of university students is likely to be beyond this restriction, the need to wrangle with a method for authenticating users and ensuring personal data is secure is a critical task, however remains out of scope for the project at this stage.
+Another consideration relevant to Australia is the recent social media ban for users under 16. While university students are generally above this threshold, any implementation would still need to address user authentication and data security. This remains out of scope for the current prototype but represents an important future direction.
 
-It should be noted however that the social media ban that necessitates user verification was also an opportunity for the app - by requiring users to be verified, likelihood of hate speech, trolling and harassment is reduced. Additionally, the app leans into the idea of responses by real people in contrast to say a google search; you are getting responses from other students likely in similar situations / age groups as you.
-
+Interestingly, this same regulation also presents an opportunity. By requiring verified student accounts, CultureConnect not only ensures authenticity but also reduces the likelihood of harmful or anonymous behaviour. Moreover, it emphasizes that the platform is by real students, for real students - offering genuine, relatable perspectives rather than algorithmically generated or impersonal search results.
 ## Future Development
-- Full backend integration
-- Verification of users (age)
-- Moderation tooling
-- Recommendation algorithm of "Explore page"
+1. Backend Integration:
+Implement a persistent backend service (e.g. Firebase, Supabase, or custom API) to store posts, comments, and user data. This would enable real-time updates, multi-user functionality, and session persistence across devices.
+
+2. Verified User System:
+Introduce secure account verification to confirm student identity and age. This ensures accountability and aligns with new social media age-verification regulations in Australia.
+
+3. Moderation Tools:
+Add an automated and human-in-the-loop moderation pipeline to detect and manage hate speech, offensive language, and spam content before publication.
+
+4. Recommendation Algorithm:
+Enhance the Explore feed with a ranked recommendation system that prioritises posts based on engagement (likes, comments) and freshness, creating a personalised and dynamic discovery experience.
 
 ## Design Intentions (C1, C2)
 - Designed in swiftUI, the app aimed to stay true to native iOS design principles (Human Interface Guidelines).
