@@ -30,11 +30,12 @@ struct FullScreenPostView: View {
                         .foregroundStyle(.secondary)
                 }
                 
-                // Title / hook
+                // Title / hook (for answers this is the question text)
                 Text(post.title)
                     .font(.system(.title3, design: .rounded, weight: .semibold))
                     .foregroundStyle(.primary)
                     .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.leading) // <- force left
                 
                 // Colored bordered answer box
                 ZStack {
@@ -55,6 +56,7 @@ struct FullScreenPostView: View {
                         Text(post.body)
                             .font(.system(.body, design: .rounded))
                             .foregroundStyle(.primary)
+                            .multilineTextAlignment(.leading) // <- force left
                             .padding(16)
                             .fixedSize(horizontal: false, vertical: true)
                             .textSelection(.enabled)
@@ -65,7 +67,7 @@ struct FullScreenPostView: View {
                 
                 // Author / trust block
                 HStack(alignment: .top, spacing: 12) {
-                    // Avatar
+                    // Avatar bubble
                     ZStack {
                         Circle()
                             .fill(
@@ -139,7 +141,7 @@ struct FullScreenPostView: View {
                 }
                 .padding(.top, 4)
             }
-            // Padding for navbar and title
+            // Safe-ish padding so we don't sit behind the tab bar / title
             .padding(.horizontal, 20)
             .padding(.top, 16)
             .padding(.bottom, 32)

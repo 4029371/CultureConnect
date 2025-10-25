@@ -6,11 +6,11 @@ struct Post: Identifiable, Hashable {
     
     // Link back to the question
     var questionID: UUID
-    var questionText: String      // copy of the question at time of answer
+    var questionText: String
     
     // Core content
-    var title: String             // short hook/headline for the answer
-    var body: String              // the answer content
+    var title: String
+    var body: String
     
     // Author info
     var authorDisplayName: String
@@ -31,14 +31,6 @@ struct Post: Identifiable, Hashable {
     var isReported: Bool
 }
 
-struct Comment: Identifiable, Hashable {
-    let id: UUID
-    var authorDisplayName: String
-    var body: String
-    var timestamp: Date
-}
-
-// Filtering
 enum PostCategory: String, CaseIterable, Codable, Hashable {
     case language     = "Language"
     case food         = "Food"
@@ -46,6 +38,19 @@ enum PostCategory: String, CaseIterable, Codable, Hashable {
     case music        = "Music"
     case general      = "General"
     case uniLife      = "Uni Life"
+}
+
+extension PostCategory {
+    var color: Color {
+        switch self {
+        case .language:   return .teal
+        case .food:       return .orange
+        case .events:     return .pink
+        case .music:      return .purple
+        case .general:    return .gray
+        case .uniLife:    return .blue
+        }
+    }
 }
 
 // Seed data
@@ -59,9 +64,7 @@ extension Post {
             title: "Do Malaysians actually eat spicy food for breakfast??",
             body: """
                 Yes. Nasi lemak is literally coconut rice + sambal (chili paste) and we eat it at 8am before class.
-
                 When I first moved here people were like “how are you eating chilli this early” and I was like “how are you eating cereal with no seasoning.”
-
                 But also: not every region eats it super spicy. My family tones it down a bit because my mum can’t handle heat.
                 """,
             authorDisplayName: "Aisha 🇲🇾",
@@ -97,9 +100,7 @@ extension Post {
             title: "Is it rude to try to speak Japanese if you're not good at it?",
             body: """
                 Short answer: No. We think it's cute and respectful 90% of the time.
-
                 The only time it's weird is if you ignore when we try to switch to English to help you, and you keep forcing it like it's a performance.
-
                 So: try, but also read the vibe.
                 """,
             authorDisplayName: "Rin 🇯🇵",
@@ -122,9 +123,7 @@ extension Post {
             title: "How we celebrate Diwali in India 🇮🇳",
             body: """
                 It’s more than lights - it’s about cleaning the home, decorating with rangoli, visiting relatives, and eating *a lot* of sweets.
-
                 Here in Melbourne, we try to recreate it by cooking together in our sharehouse and video calling our families.
-
                 The feeling of home comes back for a bit, even with cheap fairy lights from Kmart 😅.
                 """,
             authorDisplayName: "Ananya 🇮🇳",
@@ -147,7 +146,6 @@ extension Post {
             title: "K-Pop isn’t just pop — it’s a comfort blanket 🎵",
             body: """
                 When I first came to Australia, I played old IU and Epik High songs to fall asleep. It’s not about lyrics, it’s about familiarity.
-
                 Music in your own language feels like being hugged by home after a long day.
                 """,
             authorDisplayName: "Jin 🇰🇷",
@@ -170,7 +168,6 @@ extension Post {
             title: "Adjusting to how casual professors are here 😅",
             body: """
                 Back home, we’d never call a lecturer by their first name - here, everyone’s like “Hey Dave!”
-
                 It took me weeks to stop bowing slightly when leaving tutorials 😭. Now I love the chill vibe though.
                 """,
             authorDisplayName: "Yuki 🇯🇵",
@@ -193,7 +190,6 @@ extension Post {
             title: "Being quiet doesn’t mean being shy",
             body: """
                 In my culture, listening is a sign of respect — we wait before jumping into conversation. 
-
                 Some locals thought I was shy or uninterested, but I just didn’t want to interrupt. I’ve learned to balance both styles now.
                 """,
             authorDisplayName: "Farah 🇮🇩",
@@ -206,53 +202,6 @@ extension Post {
             commentCount: 14,
             comments: [],
             isReported: false
-        )
-    ]
-}
-
-
-extension PostCategory {
-    var color: Color {
-        switch self {
-        case .language:   return .teal
-        case .food:       return .orange
-        case .events:     return .pink
-        case .music:      return .purple
-        case .general:    return .gray
-        case .uniLife:    return .blue
-        }
-    }
-}
-
-struct Question: Identifiable, Hashable {
-    let id: UUID
-    var text: String              // the actual question being asked
-    var category: PostCategory    // same categories (Food, Language, etc.)
-    
-    var askedByDisplayName: String   // e.g. "Jess 🇦🇺"
-    var askedByUniversity: String?   // optional
-    var timestamp: Date
-    
-    // Later you can add: isAnonymous, isReported, etc.
-}
-
-extension Question {
-    static let sampleQuestions: [Question] = [
-        Question(
-            id: UUID(),
-            text: "What’s something international students wish locals understood about fasting during Ramadan?",
-            category: .general,
-            askedByDisplayName: "Liam 🇦🇺",
-            askedByUniversity: "UniMelb",
-            timestamp: Date(timeIntervalSinceNow: -3600)
-        ),
-        Question(
-            id: UUID(),
-            text: "Is it rude to speak bad Japanese or is it appreciated if I try?",
-            category: .language,
-            askedByDisplayName: "Emily 🇦🇺",
-            askedByUniversity: nil,
-            timestamp: Date(timeIntervalSinceNow: -7200)
         )
     ]
 }

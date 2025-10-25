@@ -2,9 +2,7 @@ import SwiftUI
 
 struct PickQuestionToAnswerView: View {
     @EnvironmentObject var questionStore: QuestionStore
-    @EnvironmentObject var postStore: PostStore
     
-    // 👇 this comes from AnswerFlowRootView
     @Binding var path: [AnswerRoute]
     
     var body: some View {
@@ -12,7 +10,6 @@ struct PickQuestionToAnswerView: View {
             Section("Tap a question to answer") {
                 ForEach(questionStore.questions) { q in
                     Button {
-                        // push the composer for the chosen question
                         path.append(.composeForQuestion(q))
                     } label: {
                         VStack(alignment: .leading, spacing: 6) {
@@ -49,12 +46,8 @@ struct PickQuestionToAnswerView: View {
 }
 
 #Preview {
-    // We need to give PickQuestionToAnswerView a binding for path in previews.
     NavigationStack {
-        PickQuestionToAnswerView(
-            path: .constant([]) // just a dummy binding for preview
-        )
+        PickQuestionToAnswerView(path: .constant([]))
     }
-    .environmentObject(PostStore())
     .environmentObject(QuestionStore())
 }

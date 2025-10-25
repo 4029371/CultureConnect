@@ -6,26 +6,29 @@ struct AnswerComposerView: View {
     
     let question: Question
     
-    @State private var answerTitle: String = ""
     @State private var answerBody: String = ""
     
-    // stub "current user" info for demo
+    // stub user info
     let authorName: String = "You 🌏"
     let authorTag: String  = "Sharing from lived experience"
     let authorUni: String? = "Demo University"
     let isVerified: Bool   = false
     
     var canPost: Bool {
-        !answerTitle.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        !answerBody.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !answerBody
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .isEmpty
     }
     
     var body: some View {
         Form {
+            // Show the question being answered
             Section("Question") {
                 Text(question.text)
                     .font(.subheadline)
                     .foregroundColor(.primary)
+                    .fixedSize(horizontal: false, vertical: true)
+                
                 Text(question.category.rawValue)
                     .font(.caption2)
                     .padding(.horizontal, 8)
@@ -37,15 +40,20 @@ struct AnswerComposerView: View {
                     .foregroundColor(question.category.color)
             }
             
-            Section("Your headline") {
-                TextField("Give your answer a headline...", text: $answerTitle)
-                    .textInputAutocapitalization(.sentences)
-            }
-            
+            // Only ask for the answer now
             Section("Your answer") {
                 TextEditor(text: $answerBody)
                     .frame(minHeight: 160)
                     .textInputAutocapitalization(.sentences)
+                    .overlay(alignment: .topLeading) {
+                        if answerBody.isEmpty {
+                            Text("Share your lived experience, context, personal nuance…")
+                                .foregroundColor(.secondary)
+                                .padding(.top, 8)
+                                .padding(.leading, 4)
+                                .font(.callout)
+                        }
+                    }
             }
             
             Section {
@@ -67,7 +75,7 @@ struct AnswerComposerView: View {
             id: UUID(),
             questionID: question.id,
             questionText: question.text,
-            title: answerTitle,
+            title: question.text,
             body: answerBody,
             authorDisplayName: authorName,
             authorCulturalTag: authorTag,
@@ -87,8 +95,6 @@ struct AnswerComposerView: View {
 }
 
 #Preview {
-    AnswerComposerView(
-        question: Question.sampleQuestions[0]
-    )
-    .environmentObject(PostStore())
+    AnswerComposerView(question: Question.sampleQuestions[0])
+        .environmentObject(PostStore())
 }
