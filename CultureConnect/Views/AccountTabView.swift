@@ -16,7 +16,7 @@ struct AccountTabView: View {
                 Text("Me 🇦🇺")
                     .font(.system(.title3, design: .rounded, weight: .semibold))
                 
-                Text("Sharing from lived experience")
+                Text("Singaporean-Chinese • Naturalized Australian")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
