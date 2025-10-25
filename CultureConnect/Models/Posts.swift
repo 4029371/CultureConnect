@@ -31,6 +31,7 @@ struct Post: Identifiable, Hashable {
     var isReported: Bool
 }
 
+// MARK: - Post Category
 enum PostCategory: String, CaseIterable, Codable, Hashable {
     case language     = "Language"
     case food         = "Food"
@@ -53,7 +54,7 @@ extension PostCategory {
     }
 }
 
-// Seed data
+// MARK: - Post Samples
 extension Post {
     static let samplePosts: [Post] = [
         // FOOD

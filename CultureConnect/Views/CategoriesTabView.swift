@@ -1,12 +1,21 @@
 import SwiftUI
 
+// MARK: - Filter type
+enum PostCategoryFilter: Equatable {
+    case all
+    case specific(PostCategory)
+}
+
 struct CategoriesTabView: View {
+    // MARK: - Properties
     @EnvironmentObject var postStore: PostStore
     
     @State private var selectedCategory: PostCategoryFilter = .all
     @State private var navPath: [CategoryRoute] = []
+    @State private var searchText: String = ""
     
-    var filteredPosts: [Post] {
+    // Derived lists (category filter + text search)
+    private var filteredPosts: [Post] {
         switch selectedCategory {
         case .all:
             return postStore.posts
@@ -15,9 +24,24 @@ struct CategoriesTabView: View {
         }
     }
     
+    private var visiblePosts: [Post] {
+        let base = filteredPosts
+        let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if trimmed.isEmpty {
+            return base
+        } else {
+            return base.filter { post in
+                post.title.localizedCaseInsensitiveContains(trimmed)
+            }
+        }
+    }
+    
+    // MARK: - Body
     var body: some View {
         NavigationStack(path: $navPath) {
             VStack(spacing: 0) {
+                
                 // Filter bar
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
@@ -51,8 +75,38 @@ struct CategoriesTabView: View {
                     alignment: .bottom
                 )
                 
+                // Search bar
+                HStack(spacing: 8) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.secondary)
+                    
+                    TextField("Search questions / headlines…", text: $searchText)
+                        .textInputAutocapitalization(.never)
+                        .disableAutocorrection(true)
+                    
+                    if !searchText.isEmpty {
+                        Button {
+                            searchText = ""
+                        } label: {
+                            Image(systemName: "xmark.circle.fill")
+                                .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .font(.subheadline)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 10)
+                .background(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .fill(Color(.secondarySystemBackground))
+                )
+                .padding(.horizontal, 16)
+                .padding(.top, 12)
+                .padding(.bottom, 4)
+                
                 // Post list OR empty state
-                if filteredPosts.isEmpty {
+                if visiblePosts.isEmpty {
                     VStack(spacing: 12) {
                         Text("Nothing here yet")
                             .font(.system(.headline, design: .rounded))
@@ -68,7 +122,7 @@ struct CategoriesTabView: View {
                 } else {
                     ScrollView {
                         LazyVStack(spacing: 12) {
-                            ForEach(filteredPosts) { post in
+                            ForEach(visiblePosts) { post in
                                 Button {
                                     navPath.append(.postDetail(post))
                                 } label: {
@@ -100,19 +154,15 @@ struct CategoriesTabView: View {
     }
 }
 
-// MARK: - Filter type
-enum PostCategoryFilter: Equatable {
-    case all
-    case specific(PostCategory)
-}
-
 // MARK: - Filter chip view
 private struct CategoryFilterChip: View {
+    // MARK: - Properties
     let label: String
     let isSelected: Bool
     let tint: Color
     let onTap: () -> Void
     
+    // MARK: - Body
     var body: some View {
         Button {
             onTap()
@@ -148,8 +198,10 @@ private struct CategoryFilterChip: View {
 
 // MARK: - Post card row
 private struct CategoryPostCard: View {
+    // MARK: - Properties
     let post: Post
     
+    // MARK: - Body
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             // headline (for answers this is the question text)
@@ -211,6 +263,7 @@ private struct CategoryPostCard: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     CategoriesTabView()
         .environmentObject(PostStore())

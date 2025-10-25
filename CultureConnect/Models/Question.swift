@@ -3,16 +3,15 @@ import SwiftUI
 
 struct Question: Identifiable, Hashable {
     let id: UUID
-    var text: String              // the actual question being asked
-    var category: PostCategory    // same categories (Food, Language, etc.)
+    var text: String
+    var category: PostCategory
     
-    var askedByDisplayName: String   // e.g. "Jess 🇦🇺"
-    var askedByUniversity: String?   // optional
+    var askedByDisplayName: String
+    var askedByUniversity: String?
     var timestamp: Date
-    
-    // Later you can add: isAnonymous, isReported, etc.
 }
 
+// MARK: - Question Samples
 extension Question {
     static let sampleQuestions: [Question] = [
         Question(
@@ -28,7 +27,7 @@ extension Question {
             text: "Is it rude to speak bad Japanese or is it appreciated if I try?",
             category: .language,
             askedByDisplayName: "Emily 🇦🇺",
-            askedByUniversity: nil,
+            askedByUniversity: "Monash",
             timestamp: Date(timeIntervalSinceNow: -7200)
         )
     ]
