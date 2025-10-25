@@ -12,4 +12,12 @@ class PostStore: ObservableObject {
         // prepend
         posts.insert(post, at: 0)
     }
+    
+    func addComment(_ comment: Comment, to postID: UUID) {
+        if let index = posts.firstIndex(where: { $0.id == postID }) {
+            posts[index].comments.append(comment)
+            posts[index].commentCount += 1
+        }
+    }
 }
+
