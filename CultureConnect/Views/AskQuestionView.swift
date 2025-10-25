@@ -7,9 +7,9 @@ struct AskQuestionView: View {
     @State private var questionText: String = ""
     @State private var category: PostCategory = .general
     
-    // (in real app we'd use logged in user)
-    let askerName = "Liam 🇦🇺"
-    let askerUni  = "UniMelb"
+    // Placeholder info
+    let askerName = "Me 🇦🇺"
+    let askerUni  = "RMIT University"
     
     var canPost: Bool {
         !questionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -66,7 +66,8 @@ struct AskQuestionView: View {
             timestamp: Date()
         )
         questionStore.addQuestion(q)
-        // for demo we just clear the form instead of popping views
+        
+        // Clear the form
         questionText = ""
         category = .general
     }

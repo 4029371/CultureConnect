@@ -20,10 +20,12 @@ struct SignupView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Create your account")
                         .font(.system(.title, design: .rounded, weight: .bold))
+                        .frame(maxWidth: .infinity, alignment: .center)
                     
-                    Text("Join CultureConnect 🌍")
+                    Text("Join CultureConnect!")
                         .font(.system(.callout, design: .rounded))
                         .foregroundStyle(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 8)

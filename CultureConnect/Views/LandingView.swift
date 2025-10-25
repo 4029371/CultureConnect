@@ -103,12 +103,6 @@ struct LandingView: View {
                                 .foregroundStyle(.primary)
                         }
                         .accessibilityIdentifier("loginButton")
-                        
-                        Text("Only verified voices. No AI answers. No anonymous hate.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.horizontal, 12)
                     }
                     .padding(24)
                     .background(

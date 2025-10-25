@@ -8,10 +8,10 @@ struct AnswerComposerView: View {
     
     @State private var answerBody: String = ""
     
-    // stub user info
-    let authorName: String = "You 🌏"
+    // Placeholder user info
+    let authorName: String = "Me 🇦🇺"
     let authorTag: String  = "Sharing from lived experience"
-    let authorUni: String? = "Demo University"
+    let authorUni: String? = "RMIT University"
     let isVerified: Bool   = false
     
     var canPost: Bool {

@@ -64,7 +64,7 @@ struct LoginView: View {
                     }
                 }
                 
-                // Log in button → calls onLoginSuccess
+                // Log in button
                 Button {
                     onLoginSuccess()
                 } label: {
@@ -98,7 +98,7 @@ struct LoginView: View {
                 .disabled(!canLogin)
                 .padding(.top, 8)
                 
-                // Forgot password
+                // Forgot password (WIP)
                 Button {
                     print("forgot password tapped")
                 } label: {

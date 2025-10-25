@@ -11,7 +11,7 @@ struct AccountTabView: View {
                     .font(.system(size: 64))
                     .foregroundColor(.secondary)
                 
-                Text("You 🌏")
+                Text("Me 🇦🇺")
                     .font(.system(.title3, design: .rounded, weight: .semibold))
                 
                 Text("Sharing from lived experience")
@@ -20,7 +20,7 @@ struct AccountTabView: View {
             }
             .padding(.top, 40)
             
-            // Maybe some settings / placeholders
+            // Placeholders
             VStack(spacing: 12) {
                 HStack {
                     Image(systemName: "checkmark.seal.fill")
@@ -34,7 +34,7 @@ struct AccountTabView: View {
                 HStack {
                     Image(systemName: "building.columns")
                         .foregroundColor(.purple)
-                    Text("Affiliation: Demo University")
+                    Text("Affiliation: RMIT University")
                         .font(.subheadline)
                         .foregroundStyle(.primary)
                     Spacer()
