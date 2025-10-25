@@ -3,12 +3,14 @@ import SwiftUI
 struct FullScreenPostView: View {
     // MARK: - Properties
     let post: Post
+    @EnvironmentObject var postStore: PostStore
+    @State private var showingComments = false
     
     // MARK: - Body
     var body: some View {
         ZStack {
             Color(.systemBackground)
-                .edgesIgnoringSafeArea([]) // don't run under bars
+                .edgesIgnoringSafeArea([])
             
             VStack(alignment: .leading, spacing: 16) {
                 
@@ -32,44 +34,104 @@ struct FullScreenPostView: View {
                         .foregroundStyle(.secondary)
                 }
                 
-                // Title / hook (for answers this is the question text)
+                // Title
                 Text(post.title)
                     .font(.system(.title3, design: .rounded, weight: .semibold))
                     .foregroundStyle(.primary)
+                    .multilineTextAlignment(.leading)
                     .fixedSize(horizontal: false, vertical: true)
-                    .multilineTextAlignment(.leading) // <- force left
                 
                 // Colored bordered answer box
                 ZStack {
-                    // Border
                     RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(
-                            post.category.color,
-                            lineWidth: 2
-                        )
+                        .stroke(post.category.color, lineWidth: 2)
                         .background(
-                            // Inner fill
                             RoundedRectangle(cornerRadius: 18, style: .continuous)
                                 .fill(post.category.color.opacity(0.12))
                         )
+                        .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 3)
                     
-                    // Scrollable body text
                     ScrollView {
                         Text(post.body)
                             .font(.system(.body, design: .rounded))
                             .foregroundStyle(.primary)
-                            .multilineTextAlignment(.leading) // <- force left
+                            .multilineTextAlignment(.leading)
                             .padding(16)
                             .fixedSize(horizontal: false, vertical: true)
                             .textSelection(.enabled)
                     }
                     .scrollIndicators(.never)
+                    
+                    // Bottom-right overlay (likes, comments, share)
+                    VStack {
+                        Spacer()
+                        HStack(spacing: 10) {
+                            // likes
+                            HStack(spacing: 4) {
+                                Image(systemName: "heart.fill")
+                                    .foregroundColor(.pink)
+                                    .font(.system(size: 18, weight: .semibold))
+                                Text("\(post.likeCount)")
+                                    .foregroundColor(.pink)
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                            }
+                            
+                            // comments (tappable)
+                            Button {
+                                showingComments = true
+                            } label: {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "text.bubble.fill")
+                                        .foregroundColor(.blue)
+                                        .font(.system(size: 18, weight: .semibold))
+                                        .offset(y: 1)
+                                    Text("\(post.commentCount)")
+                                        .foregroundColor(.blue)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            .buttonStyle(.plain)
+                            
+                            // share
+                            Button {
+                                print("share tapped")
+                            } label: {
+                                Image(systemName: "arrow.up.square.fill")
+                                    .font(.system(size: 18, weight: .semibold))
+                                    .foregroundColor(.green)
+                            }
+                            
+                            Spacer(minLength: 0)
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .background(
+                            LinearGradient(
+                                colors: [
+                                    Color(.systemBackground).opacity(0.0),
+                                    Color(.systemBackground).opacity(0.7)
+                                ],
+                                startPoint: .top,
+                                endPoint: .bottom
+                            )
+                            .clipShape(RoundedRectangle(cornerRadius: 18))
+                        )
+                    }
+                    .padding(4)
                 }
                 .frame(maxHeight: .infinity)
                 
+                // Answered by
+                Text("Answered by \(post.authorDisplayName)")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding(.leading, 4)
+                
                 // Author / trust block
-                HStack(alignment: .top, spacing: 12) {
-                    // Avatar bubble
+                HStack(alignment: .center, spacing: 12) {
+                    // Avatar
                     ZStack {
                         Circle()
                             .fill(
@@ -99,7 +161,6 @@ struct FullScreenPostView: View {
                                 Image(systemName: "checkmark.seal.fill")
                                     .font(.system(size: 12, weight: .bold))
                                     .foregroundColor(.blue)
-                                    .accessibilityLabel("Verified lived experience contributor")
                             }
                         }
                         
@@ -117,36 +178,24 @@ struct FullScreenPostView: View {
                     
                     Spacer()
                 }
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(Color.white)
+                        .shadow(color: .black.opacity(0.15), radius: 6, x: 0, y: 3)
+                )
                 .padding(.top, 8)
-                
-                // Social row
-                HStack(spacing: 20) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.pink)
-                            .font(.system(size: 14, weight: .semibold))
-                        Text("\(post.likeCount)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    
-                    HStack(spacing: 4) {
-                        Image(systemName: "text.bubble.fill")
-                            .foregroundColor(.blue)
-                            .font(.system(size: 14, weight: .semibold))
-                        Text("\(post.commentCount)")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    
-                    Spacer()
-                }
-                .padding(.top, 4)
             }
-            // Safe-ish padding so we don't sit behind the tab bar / title
             .padding(.horizontal, 20)
             .padding(.top, 16)
             .padding(.bottom, 32)
+        }
+        // Comments sheet
+        .sheet(isPresented: $showingComments) {
+            CommentsSheetView(
+                post: post,
+                postStore: postStore
+            )
         }
     }
 }
@@ -163,23 +212,21 @@ private func initials(from name: String) -> String {
     return "·"
 }
 
-private func timeAgoString(from date: Date) -> String {
+public func timeAgoString(from date: Date) -> String {
     let seconds = Int(Date().timeIntervalSince(date))
     if seconds < 60 {
         return "just now"
     } else if seconds < 3600 {
-        let mins = seconds / 60
-        return "\(mins)m ago"
+        return "\(seconds / 60)m ago"
     } else if seconds < 86400 {
-        let hrs = seconds / 3600
-        return "\(hrs)h ago"
+        return "\(seconds / 3600)h ago"
     } else {
-        let days = seconds / 86400
-        return "\(days)d ago"
+        return "\(seconds / 86400)d ago"
     }
 }
 
 // MARK: - Preview
 #Preview {
     FullScreenPostView(post: Post.samplePosts[0])
+        .environmentObject(PostStore())
 }
