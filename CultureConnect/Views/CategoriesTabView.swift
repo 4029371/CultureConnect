@@ -4,6 +4,7 @@ struct CategoriesTabView: View {
     @EnvironmentObject var postStore: PostStore
     
     @State private var selectedCategory: PostCategoryFilter = .all
+    @State private var navPath: [CategoryRoute] = []
     
     var filteredPosts: [Post] {
         switch selectedCategory {
@@ -15,76 +16,91 @@ struct CategoriesTabView: View {
     }
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Filter bar
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 8) {
-                    // "All" chip
-                    CategoryFilterChip(
-                        label: "All",
-                        isSelected: selectedCategory == .all,
-                        tint: .gray
-                    ) {
-                        selectedCategory = .all
-                    }
-                    
-                    // One chip per category
-                    ForEach(PostCategory.allCases, id: \.self) { cat in
+        NavigationStack(path: $navPath) {
+            VStack(spacing: 0) {
+                // Filter bar
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        // "All"
                         CategoryFilterChip(
-                            label: cat.rawValue,
-                            isSelected: selectedCategory == .specific(cat),
-                            tint: cat.color
+                            label: "All",
+                            isSelected: selectedCategory == .all,
+                            tint: .gray
                         ) {
-                            selectedCategory = .specific(cat)
+                            selectedCategory = .all
+                        }
+                        
+                        // Each category
+                        ForEach(PostCategory.allCases, id: \.self) { cat in
+                            CategoryFilterChip(
+                                label: cat.rawValue,
+                                isSelected: selectedCategory == .specific(cat),
+                                tint: cat.color
+                            ) {
+                                selectedCategory = .specific(cat)
+                            }
                         }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
                 }
-                .padding(.horizontal, 16)
-                .padding(.vertical, 12)
-            }
-            .background(Color(.systemBackground).opacity(0.9))
-            .overlay(
-                Divider()
-                    .offset(y: 0.5),
-                alignment: .bottom
-            )
-            
-            // Post list
-            if filteredPosts.isEmpty {
-                VStack(spacing: 0) {
-                    Text("Nothing here yet")
-                        .font(.system(.headline, design: .rounded))
-                    
-                    Text("Be the first to share your experience in this category.")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .padding(.horizontal, 24)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .background(Color(.systemBackground))
-            } else {
-                ScrollView {
-                    LazyVStack(spacing: 0, pinnedViews: []) {
-                        ForEach(filteredPosts) { post in
-                            CategoryPostCard(post: post)
+                .background(Color(.systemBackground).opacity(0.9))
+                .overlay(
+                    Divider()
+                        .offset(y: 0.5),
+                    alignment: .bottom
+                )
+                
+                // Post list OR empty state
+                if filteredPosts.isEmpty {
+                    VStack(spacing: 12) {
+                        Text("Nothing here yet")
+                            .font(.system(.headline, design: .rounded))
+                        
+                        Text("Be the first to share your experience in this category.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 24)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color(.systemBackground))
+                } else {
+                    ScrollView {
+                        LazyVStack(spacing: 12) {
+                            ForEach(filteredPosts) { post in
+                                Button {
+                                    navPath.append(.postDetail(post))
+                                } label: {
+                                    CategoryPostCard(post: post)
+                                }
+                                .buttonStyle(.plain)
                                 .padding(.horizontal, 16)
+                            }
                         }
-                        .padding(.top, 5)
-                        .padding(.bottom, 5)
+                        .padding(.top, 16)
+                        .padding(.bottom, 32)
                     }
+                    .background(Color(.systemBackground))
                 }
-                .background(Color(.systemBackground))
+            }
+            .navigationTitle("Categories")
+            .navigationBarTitleDisplayMode(.inline)
+            
+            // destination for tapping a post
+            .navigationDestination(for: CategoryRoute.self) { route in
+                switch route {
+                case .postDetail(let post):
+                    FullScreenPostView(post: post)
+                        .navigationBarTitleDisplayMode(.inline)
+                        .navigationBarBackButtonHidden(false)
+                }
             }
         }
-        .navigationTitle("Categories")
-        .navigationBarTitleDisplayMode(.inline)
-        .background(Color(.systemBackground))
     }
 }
 
 // MARK: - Filter type
-// We want "All" plus specific categories.
 enum PostCategoryFilter: Equatable {
     case all
     case specific(PostCategory)
@@ -136,7 +152,7 @@ private struct CategoryPostCard: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            // headline (which is the question text for answers)
+            // headline (for answers this is the question text)
             Text(post.title)
                 .font(.system(.headline, design: .rounded, weight: .semibold))
                 .foregroundColor(.primary)
@@ -145,7 +161,7 @@ private struct CategoryPostCard: View {
             
             // author / stats row
             HStack(alignment: .center, spacing: 12) {
-                // author + (verified badge if any)
+                // author + badge
                 HStack(spacing: 4) {
                     Text(post.authorDisplayName)
                         .font(.caption)
@@ -196,8 +212,6 @@ private struct CategoryPostCard: View {
 }
 
 #Preview {
-    NavigationStack {
-        CategoriesTabView()
-            .environmentObject(PostStore())
-    }
+    CategoriesTabView()
+        .environmentObject(PostStore())
 }

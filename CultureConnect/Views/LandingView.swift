@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct LandingView: View {
+    // MARK: - Properties
     let onLoginSuccess: () -> Void
     let onSignupSuccess: () -> Void
     
+    // MARK: - Body
     var body: some View {
         ZStack {
             // Brand gradient background
@@ -143,6 +145,7 @@ struct LandingView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         LandingView(

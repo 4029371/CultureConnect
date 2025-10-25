@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct FullScreenPostView: View {
+    // MARK: - Properties
     let post: Post
     
+    // MARK: - Body
     var body: some View {
         ZStack {
             Color(.systemBackground)
@@ -149,7 +151,7 @@ struct FullScreenPostView: View {
     }
 }
 
-// MARK: Helpers
+// MARK: - Methods
 private func initials(from name: String) -> String {
     let parts = name.split(separator: " ")
     if let first = parts.first {
@@ -177,6 +179,7 @@ private func timeAgoString(from date: Date) -> String {
     }
 }
 
+// MARK: - Preview
 #Preview {
     FullScreenPostView(post: Post.samplePosts[0])
 }

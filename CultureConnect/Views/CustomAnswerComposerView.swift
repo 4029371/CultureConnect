@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CustomAnswerComposerView: View {
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var postStore: PostStore
     
@@ -19,6 +20,7 @@ struct CustomAnswerComposerView: View {
         !bodyText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
+    // MARK: - Body
     var body: some View {
         Form {
             Section("Your headline") {
@@ -54,6 +56,7 @@ struct CustomAnswerComposerView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
+    // MARK: - Methods
     private func postAnswer() {
         // We generate a fake "question" from their headline.
         let fakeQID = UUID()
@@ -81,6 +84,7 @@ struct CustomAnswerComposerView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     CustomAnswerComposerView()
         .environmentObject(PostStore())

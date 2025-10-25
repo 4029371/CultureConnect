@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct PickQuestionToAnswerView: View {
+    // MARK: - Properties
     @EnvironmentObject var questionStore: QuestionStore
-    
     @Binding var path: [AnswerRoute]
     
+    // MARK: - Body
     var body: some View {
         List {
             Section("Tap a question to answer") {
@@ -45,6 +46,7 @@ struct PickQuestionToAnswerView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         PickQuestionToAnswerView(path: .constant([]))

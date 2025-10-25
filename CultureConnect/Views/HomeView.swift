@@ -5,9 +5,10 @@ struct HomeView: View {
     @EnvironmentObject var questionStore: QuestionStore
     
     @State private var answerPath: [AnswerRoute] = []
-    
+    // MARK: - Properties
     let onLogout: () -> Void
     
+    // MARK: - Body
     var body: some View {
         TabView {
             // 1. Explore
@@ -62,6 +63,7 @@ struct HomeView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     HomeView(onLogout: {})
         .environmentObject(PostStore())

@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct AnswerMenuView: View {
+    // MARK: - Properties
     @Binding var path: [AnswerRoute]
     
+    // MARK: - Body
     var body: some View {
         List {
             Section("Contribute") {
@@ -51,6 +53,7 @@ struct AnswerMenuView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         AnswerMenuView(path: .constant([]))

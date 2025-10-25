@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct AskQuestionView: View {
+    // MARK: - Properties
     @EnvironmentObject var questionStore: QuestionStore
     @Environment(\.dismiss) private var dismiss
     
@@ -15,6 +16,7 @@ struct AskQuestionView: View {
         !questionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
+    // MARK: - Body
     var body: some View {
         NavigationStack {
             Form {
@@ -56,6 +58,7 @@ struct AskQuestionView: View {
         }
     }
     
+    // MARK: - Methods
     private func addQuestion() {
         let q = Question(
             id: UUID(),
@@ -73,6 +76,7 @@ struct AskQuestionView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     AskQuestionView()
         .environmentObject(QuestionStore())

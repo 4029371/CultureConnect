@@ -1,11 +1,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    // MARK: - Properties
     @StateObject private var postStore = PostStore()
     @StateObject private var questionStore = QuestionStore()
     
     @State private var isAuthenticated = false
     
+    // MARK: - Body
     var body: some View {
         Group {
             if isAuthenticated {
@@ -34,6 +36,7 @@ struct ContentView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     ContentView()
 }

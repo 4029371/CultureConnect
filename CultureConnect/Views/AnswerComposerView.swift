@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct AnswerComposerView: View {
+    
+    // MARK: - Properties
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var postStore: PostStore
     
@@ -20,6 +22,7 @@ struct AnswerComposerView: View {
             .isEmpty
     }
     
+    // MARK: - Body
     var body: some View {
         Form {
             // Show the question being answered
@@ -70,6 +73,7 @@ struct AnswerComposerView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
     
+    // MARK: - Methods
     private func postAnswer() {
         let newPost = Post(
             id: UUID(),
@@ -94,6 +98,7 @@ struct AnswerComposerView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     AnswerComposerView(question: Question.sampleQuestions[0])
         .environmentObject(PostStore())

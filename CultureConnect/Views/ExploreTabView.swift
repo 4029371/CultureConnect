@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct ExploreTabView: View {
+    // MARK: - Properties
     @EnvironmentObject var postStore: PostStore
     @State private var currentIndex: Int = 0
-    
+
+    // MARK: - Body
     var body: some View {
         GeometryReader { geo in
             let availableWidth  = geo.size.width
@@ -31,6 +33,7 @@ struct ExploreTabView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         ExploreTabView()

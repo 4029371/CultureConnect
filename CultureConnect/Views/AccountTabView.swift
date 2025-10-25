@@ -1,8 +1,10 @@
 import SwiftUI
 
 struct AccountTabView: View {
+    // MARK: - Properties
     let onLogout: () -> Void
     
+    // MARK: - Body
     var body: some View {
         VStack(spacing: 24) {
             // Header / profile stub
@@ -66,6 +68,7 @@ struct AccountTabView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         AccountTabView(onLogout: {})

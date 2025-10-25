@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct SignupView: View {
+    // MARK: - Properties
     let onSignupSuccess: () -> Void
     
     @State private var name: String = ""
@@ -13,6 +14,7 @@ struct SignupView: View {
         !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
     
+    // MARK: - Body
     var body: some View {
         ScrollView {
             VStack(spacing: 24) {
@@ -145,6 +147,7 @@ struct SignupView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     NavigationStack {
         SignupView(onSignupSuccess: {})
